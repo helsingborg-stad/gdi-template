@@ -51,7 +51,7 @@
 
 This is a project template for GDI server applications.
 As such, it includes
-- a microframework based on [koa](https://koajs.com/), [openapi-backend](https://github.com/anttiviljami/openapi-backend), (koa2-swagger-ui)[https://github.com/scttcper/koa2-swagger-ui] and more
+- a microframework based on [koa](https://koajs.com/), [openapi-backend](https://github.com/anttiviljami/openapi-backend), [koa2-swagger-ui](https://github.com/scttcper/koa2-swagger-ui) and more
 - best practices such as OpenAPI/Swagger
 - GraphQL support
 - Great testability
