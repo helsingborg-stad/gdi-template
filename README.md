@@ -20,9 +20,23 @@
 -->
 [![MIT License][license-shield]][license-url]
 
+<p>
+  <a href="https://github.com/helsingborg-stad/gdi-template">
+    <img src="docs/images/hbg-github-logo-combo.png" alt="Logo" width="300">
+  </a>
+</p>
+<h1>GDI Template</h1>
+<p>
+  Template repository for GDI services.
+  <br />
+  <a href="https://github.com/helsingborg-stad/gdi-template/issues">Report Bug</a>
+  ·
+  <a href="https://github.com/helsingborg-stad/gdi-template/issues">Request Feature</a>
+</p>
 
 
-# GDI Template
+
+# 
 
 <!-- TABLE OF CONTENTS -->
 <details>
