@@ -20,9 +20,23 @@
 -->
 [![MIT License][license-shield]][license-url]
 
+<p>
+  <a href="https://github.com/helsingborg-stad/gdi-template">
+    <img src="docs/images/hbg-github-logo-combo.png" alt="Logo" width="300">
+  </a>
+</p>
+<h1>GDI Template</h1>
+<p>
+  Template repository for GDI services.
+  <br />
+  <a href="https://github.com/helsingborg-stad/gdi-template/issues">Report Bug</a>
+  ·
+  <a href="https://github.com/helsingborg-stad/gdi-template/issues">Request Feature</a>
+</p>
 
 
-# GDI Template
+
+# 
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -51,7 +65,7 @@
 
 This is a project template for GDI server applications.
 As such, it includes
-- a microframework based on [koa](https://koajs.com/), [openapi-backend](https://github.com/anttiviljami/openapi-backend), (koa2-swagger-ui)[https://github.com/scttcper/koa2-swagger-ui] and more
+- a microframework based on [koa](https://koajs.com/), [openapi-backend](https://github.com/anttiviljami/openapi-backend), [koa2-swagger-ui](https://github.com/scttcper/koa2-swagger-ui) and more
 - best practices such as OpenAPI/Swagger
 - GraphQL support
 - Great testability
