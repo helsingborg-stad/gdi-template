@@ -1,6 +1,7 @@
 import * as jwt from 'jsonwebtoken'
 import * as createError from 'http-errors'
 import { getEnv } from '../get-env'
+import { StatusCodes } from 'http-status-codes'
 
 export interface AuthorizationService {
     /**
@@ -13,7 +14,7 @@ export interface AuthorizationService {
 }
 
 /**
- * Recognize JWT exceptions and map them to http 401 exceptions
+ * Recognize JWT exceptions and map them to http 401 unauthorized exceptions
  * 
  */
 const mapErrors = <T>(fn: () => T): T => {
@@ -22,7 +23,7 @@ const mapErrors = <T>(fn: () => T): T => {
 	}
 	catch (err) {
 		if (err instanceof jwt.JsonWebTokenError) {
-			throw createError(401, err)
+			throw createError(StatusCodes.UNAUTHORIZED, err)
 		}
 		throw err
 	}

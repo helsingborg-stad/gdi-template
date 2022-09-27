@@ -1,8 +1,9 @@
 import * as Debug from 'debug'
+import { StatusCodes } from 'http-status-codes'
 const debug = Debug('application')
 import * as Koa from 'koa'
 import * as Router from 'koa-router'
-import OpenAPIBackend, { Context } from 'openapi-backend'
+import OpenAPIBackend, { Context, Handler } from 'openapi-backend'
 
 import { Application, ApplicationModule } from './types'
 import { mapValues } from './util'
@@ -14,7 +15,7 @@ interface CreateApplicationArgs {
 	validateResponse?: boolean
 }
 
-// simple memoization - at most one evaluation, evalauation as late as possible
+/**  simple memoization - at most one evaluation, evalauation as late as possible */
 const ensureOnce = <T>(fn: (() => Promise<T>)): (() => Promise<T>) => {
 	let value: Promise<T> | null = null
 	return async () => {
@@ -23,6 +24,14 @@ const ensureOnce = <T>(fn: (() => Promise<T>)): (() => Promise<T>) => {
 		}
 		return value
 	}
+}
+
+const convertKoaMiddlewareToOpenAPIBackenHandler = (koaMiddleware: Koa.Middleware): Handler => (c, ctx, next) => {
+	// we copy params manually to be compatible with 
+	// libraries such as https://github.com/koajs/router/blob/master/API.md#url-parameters
+	// In short, openapi path parameters are parsed and made visible in koa context 
+	ctx.params = c.request.params
+	return koaMiddleware(ctx, next)
 }
 
 const performResponseValidation = (c: Context, ctx: Koa.Context) => {
@@ -35,6 +44,7 @@ const performResponseValidation = (c: Context, ctx: Koa.Context) => {
 	 * Also, header validation is probably not needed
 	 */
 	const { status } = ctx
+	
 	if (!((status >= 200) && (status < 300))) {
 		return
 	}
@@ -56,7 +66,7 @@ const performResponseValidation = (c: Context, ctx: Koa.Context) => {
 				operation: c.operation,
 				errors,
 			})
-			ctx.throw(502)
+			ctx.throw(StatusCodes.BAD_GATEWAY)
 		})
 }
 	
@@ -80,10 +90,10 @@ export function createApplication({ openApiDefinitionPath, validateResponse }: C
 	// setup reasonable defaults
 	api.register({
 		// https://github.com/anttiviljami/openapi-backend#quick-start
-		notFound: (c, ctx) => ctx.throw(404),
+		notFound: (c, ctx) => ctx.throw(StatusCodes.NOT_FOUND),
 		validationFail: (c, ctx) => {
 			ctx.body = { errors: c.validation.errors }
-			ctx.status = 400
+			ctx.status = StatusCodes.BAD_REQUEST
 		},
 	})
 	
@@ -114,13 +124,7 @@ export function createApplication({ openApiDefinitionPath, validateResponse }: C
 				router,
 				api,
 				application: this,
-				registerKoaApi: handlers => api.register(mapValues(handlers, handler => (c, ctx, next) => {
-					// we copy params manually to be compatible with 
-					// libraries such as https://github.com/koajs/router/blob/master/API.md#url-parameters
-					// In short, openapi path parameters are parsed and made visible in koa context 
-					ctx.params = c.request.params
-					handler(ctx, next)
-				})),
+				registerKoaApi: handlers => api.register(mapValues(handlers, convertKoaMiddlewareToOpenAPIBackenHandler)),
 			}
 		}, 
 		use(module: ApplicationModule) {

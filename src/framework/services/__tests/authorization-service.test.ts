@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes'
 import * as jwt from 'jsonwebtoken'
 import { createAuthorizationService } from '../authorization-service'
 
@@ -12,15 +13,15 @@ const wrapResultAndError = <T>(fn: (() => T)):{result?: T, error?: Error} => {
 }
 
 describe('authorization-service', () => {
-	it('tryGetUserFromJwt throw error {status: 401} on invalid signature', () => {
+	it('tryGetUserFromJwt throw error {status: 401 unauthorized} on invalid signature', () => {
 		const s = createAuthorizationService('shared secret')
 		const { error } = wrapResultAndError(() => s.tryGetUserFromJwt(jwt.sign({},'wrong shared secret')))
-		expect(error).toMatchObject({ status: 401, message: 'invalid signature' })
+		expect(error).toMatchObject({ status: StatusCodes.UNAUTHORIZED, message: 'invalid signature' })
 	})
-	it('tryGetUserFromJwt throw error {status: 401} on malformed token', () => {
+	it('tryGetUserFromJwt throw error {status: 401 unauthorized} on malformed token', () => {
 		const s = createAuthorizationService('shared secret')
 		const { error } = wrapResultAndError(() => s.tryGetUserFromJwt('a superbad token'))
-		expect(error).toMatchObject({ status: 401, message: 'jwt malformed' })
+		expect(error).toMatchObject({ status: StatusCodes.UNAUTHORIZED, message: 'jwt malformed' })
 	})
 	it('tryGetUserFromJwt(<empty>) => null', () => {
 		const s = createAuthorizationService('shared secret')

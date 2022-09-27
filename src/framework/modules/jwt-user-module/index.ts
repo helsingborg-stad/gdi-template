@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes'
 import * as Koa from 'koa'
 import { AuthorizationService } from '../../services/authorization-service'
 import { ApplicationContext, ApplicationModule } from '../../types'
@@ -10,4 +11,4 @@ export const jwtUserModule = (authorization: AuthorizationService): ApplicationM
 })
 
 /** Koa middleware that prevent futher processing if __user__ is not present in Koa context */
-export const requireJwtUser = (mv: Koa.Middleware): Koa.Middleware => (ctx, next) => ctx.user ? mv(ctx, next) : ctx.throw(401)
+export const requireJwtUser = (mv: Koa.Middleware): Koa.Middleware => (ctx, next) => ctx.user ? mv(ctx, next) : ctx.throw(StatusCodes.UNAUTHORIZED)

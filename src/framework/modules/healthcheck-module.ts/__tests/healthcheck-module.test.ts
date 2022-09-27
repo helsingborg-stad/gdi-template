@@ -14,7 +14,7 @@ const createTestApp = () => createApplication({
 
 
 describe('GET /api/v1/{api-namespace-name}/healthcheck', () => {
-	it('gives 200 by default', () => createTestApp()
+	it('gives HTTP 200 OK by default', () => createTestApp()
 		.use(healthCheckModule())
 		.run(async server => {
 			const { status } = await request(server)

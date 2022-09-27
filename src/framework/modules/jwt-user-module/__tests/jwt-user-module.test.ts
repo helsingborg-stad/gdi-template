@@ -2,6 +2,7 @@ import * as request from 'supertest'
 import { createApplication } from '../../../application'
 import { AuthorizationService, createAuthorizationService } from '../../../services/authorization-service'
 import { jwtUserModule } from '..'
+import { StatusCodes } from 'http-status-codes'
 
 const createTestApp = (authorization: AuthorizationService) => createApplication({
 	openApiDefinitionPath: './openapi.yml',
@@ -15,6 +16,6 @@ describe('jwt-user-module', () => {
 			const { status } = await request(server)
 				.get('/some/page/it/can/be/anyone/actally')
 				.set('Authorization', 'Bearer apa')
-			expect(status).toBe(401)
+			expect(status).toBe(StatusCodes.UNAUTHORIZED)
 		}))
 })
