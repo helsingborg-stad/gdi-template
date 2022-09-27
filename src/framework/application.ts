@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 const debug = Debug('application')
 import * as Koa from 'koa'
 import * as Router from 'koa-router'
-import OpenAPIBackend, { Context, Handler } from 'openapi-backend'
+import OpenAPIBackend, { Context, Handler, ValidationResult } from 'openapi-backend'
 
 import { Application, ApplicationModule } from './types'
 import { mapValues } from './util'
@@ -34,40 +34,32 @@ const convertKoaMiddlewareToOpenAPIBackenHandler = (koaMiddleware: Koa.Middlewar
 	return koaMiddleware(ctx, next)
 }
 
-const performResponseValidation = (c: Context, ctx: Koa.Context) => {
-	/**
-	 * Perform response validation
-	 * 
-	 * Typically, this is done in tests only
-	 * 
-	 * To make life simpler, we only validate 2xx results
-	 * Also, header validation is probably not needed
-	 */
-	const { status } = ctx
-	
-	if (!((status >= 200) && (status < 300))) {
-		return
-	}
-	// https://github.com/anttiviljami/openapi-backend#response-validation
-	([
-		c.api.validateResponse(ctx.body, c.operation),
-		/*
-		c.api.validateResponseHeaders(ctx.headers, c.operation, {
-			statusCode: ctx.status,
-			setMatchType: SetMatchType.Superset,
-		}),
-		*/
-	])
-		.map(({ errors }) => errors)
-		.filter(errors => errors && errors.length)
-		.map(errors => {
-			debug({
-				body: ctx.body,
-				operation: c.operation,
-				errors,
-			})
-			ctx.throw(StatusCodes.BAD_GATEWAY)
+const isNumberInRange = (number: number, min: number, max: number): boolean => (number >= min) && (number <= max)
+
+const throwOnValidationErrors = (c: Context, ctx: Koa.Context, ...validationResults: ValidationResult[]) => validationResults
+	.filter(r => r)
+	.map(({ errors }) => errors)
+	.filter(errors => errors && errors.length)
+	.map(errors => {
+		debug({
+			body: ctx.body,
+			operation: c.operation,
+			errors,
 		})
+		ctx.throw(StatusCodes.BAD_GATEWAY)
+	})
+
+/**
+ * Perform response validation
+ * 
+ * Typically, this is done in tests only
+ * 
+ * To make life simpler, we only validate 2xx results
+ * Response ody is validated bu response headers are not...
+ */
+const performResponseValidation = (c: Context, ctx: Koa.Context) => {
+	const { status } = ctx
+	isNumberInRange(status, 200, 299) && throwOnValidationErrors(c, ctx, c.api.validateResponse(ctx.body, c.operation))
 }
 	
 /**
