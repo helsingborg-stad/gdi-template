@@ -1,4 +1,4 @@
-import { createAuthorizationServiceFromEnv } from './framework/services/authorization-service'
+import { createAuthorizationServiceFromEnv } from '@helsingborg-stad/gdi-api-node/services/authorization-service'
 import { Services } from './types'
 
 

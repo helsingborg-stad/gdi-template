@@ -2,8 +2,8 @@ import * as jwt from 'jsonwebtoken'
 import * as request from 'supertest'
 import { StatusCodes } from 'http-status-codes'
 import { createApp } from '../../create-app'
-import { Application } from '../../framework/types'
-import { createAuthorizationService } from '../../framework/services/authorization-service'
+import { Application } from '@helsingborg-stad/gdi-api-node/types'
+import { createAuthorizationService } from '@helsingborg-stad/gdi-api-node/services/authorization-service'
 
 const TEST_SHARED_SECRET = 'shared secret for test'
 
@@ -37,7 +37,7 @@ describe('GraphQL endpoint /api/v1/hello-world/graphql', () => {
 			expect(status).toBe(StatusCodes.OK)
 			expect(data).toMatchObject({
 				hello: {
-					world: 'test-person-id-123',
+					world: 'Hello test-person-id-123',
 				},
 			})
 		}))
