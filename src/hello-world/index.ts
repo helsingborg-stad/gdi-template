@@ -1,8 +1,7 @@
-import { makeGqlEndpoint } from '../framework/gql/make-gql-endpoint'
-import { makeGqlMiddleware } from '../framework/gql/make-gql-middleware'
-import { GQLModule } from '../framework/gql/types'
-import { requireJwtUser } from '../framework/modules/jwt-user-module'
-import { ApplicationContext, ApplicationModule } from '../framework/types'
+import { makeGqlEndpoint, makeGqlMiddleware } from '@helsingborg-stad/gdi-api-node/gql'
+import { GQLModule } from '@helsingborg-stad/gdi-api-node/gql/types'
+import { requireJwtUser } from '@helsingborg-stad/gdi-api-node/modules/jwt-user'
+import { ApplicationContext, ApplicationModule } from '@helsingborg-stad/gdi-api-node/types'
 
 const createHelloWorldModule = (): GQLModule => ({
 	schema: `

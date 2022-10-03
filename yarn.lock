@@ -348,7 +348,7 @@
     "@graphql-tools/utils" "8.12.0"
     tslib "^2.4.0"
 
-"@graphql-tools/schema@9.0.4":
+"@graphql-tools/schema@9.0.4", "@graphql-tools/schema@^9.0.4":
   version "9.0.4"
   resolved "https://registry.yarnpkg.com/@graphql-tools/schema/-/schema-9.0.4.tgz#1a74608b57abf90fae6fd929d25e5482c57bc05d"
   integrity sha512-B/b8ukjs18fq+/s7p97P8L1VMrwapYc3N2KvdG/uNThSazRRn8GsBK0Nr+FH+mVKiUfb4Dno79e3SumZVoHuOQ==
@@ -369,6 +369,22 @@
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.1.tgz#076d78ce99822258cf813ecc1e7fa460fa74d052"
   integrity sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==
+
+"@helsingborg-stad/gdi-api-node@^1.0.0":
+  version "1.0.0"
+  resolved "https://npm.pkg.github.com/download/@helsingborg-stad/gdi-api-node/1.0.0/06c47da9176bf1e4c3989ffc5dd8d01e82838480#06c47da9176bf1e4c3989ffc5dd8d01e82838480"
+  integrity sha512-Vmz3XR61dCelOGtejM/+Ck6yHTqE+Ke6VW6fBPvISwHJElAnVqizw90MQtnMYPxyq9T0MRVqW4QT7ySLd3poEw==
+  dependencies:
+    "@graphql-tools/schema" "^9.0.4"
+    "@koa/cors" "^3.4.1"
+    graphql "^16.6.0"
+    http-errors "^2.0.0"
+    jsonwebtoken "^8.5.1"
+    koa "^2.13.4"
+    koa-bodyparser "^4.3.0"
+    koa-router "^12.0.0"
+    koa2-swagger-ui "^5.6.0"
+    openapi-backend "^5.5.0"
 
 "@humanwhocodes/config-array@^0.10.5":
   version "0.10.5"
