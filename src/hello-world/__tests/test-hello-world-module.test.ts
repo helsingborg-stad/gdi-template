@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken'
 import * as request from 'supertest'
 import { StatusCodes } from 'http-status-codes'
 import { createApp } from '../../create-app'
-import { Application } from '@helsingborg-stad/gdi-api-node/types'
+import { Application } from '@helsingborg-stad/gdi-api-node'
 import { createAuthorizationService } from '@helsingborg-stad/gdi-api-node/services/authorization-service'
 
 const TEST_SHARED_SECRET = 'shared secret for test'

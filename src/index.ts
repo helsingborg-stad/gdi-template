@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv'
-dotenv.config()
-
-
 import { createApp } from './create-app'
 import { createServicesFromEnv } from './services'
 import { Services } from './types'

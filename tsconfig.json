@@ -3,7 +3,8 @@
       "module": "commonjs",
       "target": "es2015",
       "outDir": "./dist",
-      "moduleResolution": "NodeNext"
+      "moduleResolution": "NodeNext",
+      "esModuleInterop": true
     },
     "include": [
       "src/**/*"
