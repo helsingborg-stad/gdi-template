@@ -18,7 +18,7 @@ ARG GITHUB_ACCESS_TOKEN
 
 WORKDIR /deps
 
-COPY .npmrc .
+COPY deploy.npmrc .npmrc
 COPY package.json .
 COPY yarn.lock .
 RUN yarn install --production --ignore-optional
