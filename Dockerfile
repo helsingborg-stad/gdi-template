@@ -5,7 +5,8 @@ ARG GITHUB_ACCESS_TOKEN
 
 WORKDIR /usr/src/app
 
-COPY index.js yarn.lock tsconfig.json package*.json .npmrc *.yml ./
+COPY index.js yarn.lock tsconfig.json package*.json *.yml ./,
+COPY deploy.npmrc .npmrc
 COPY src ./src
 
 RUN yarn install && yarn build
